@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<script>
+    function copyText() {
+
+        /* Copy text into clipboard */
+        const outputTextArea = document.getElementById('handoutput');
+        navigator.clipboard.writeText
+        (outputTextArea.value);
+    }
+
+    (function (window, document, undefined) {
+
+// code that should be taken care of right away
+
+        window.onload = init;
+
+        function init() {
+            const textArea = document.getElementById('handinput');
+            textArea.addEventListener('input', () => {
+                const outputTextArea = document.getElementById('handoutput');
+                outputTextArea.value = "";
+                var rngFlag = 0;
+                var newlines = "";
+                var lines = textArea.value.split('\n');
+                lines.forEach(function(line){
+                    console.log(line);
+                    if (line.includes("*** RNG ***")){
+                        rngFlag = 1;
+                    }
+                    if (!(rngFlag)) {
+                        if (line.includes("Poker Hand")){
+                            line = line.replace("Poker Hand", "PokerStars Hand");
+                            line = line.replace(" ) ", " ) - ")
+                            line = line.replace(") ", ") - ")
+                        }
+                        line+="\n";
+                        newlines+=line;
+                    }
+                });
+
+                outputTextArea.value = newlines;
+            })
+
+
+        }
+
+    })(window, document, undefined);
+
+</script>
+
+
+<body>
+
+<h1>Raw CoinPoker Converter </h1>
+
+
+<textarea contenteditable id="handinput" name="w3review" style="width: 30%;height: 600px">
+  Insert hh here
+  </textarea>
+<textarea contenteditable id="handoutput" name="w3review" style="width: 30%;height: 600px">
+
+  </textarea>
+<!--<iframe src="https://hand2note.com/Hands"></iframe>-->
+<br><br>
+<button onclick="copyText()">Copy output to clipboard</button>
+<a href="https://hand2note.com/Hands" target="_blank">Hand2Note</a>
+
+</body>
+</html>
