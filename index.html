@@ -112,7 +112,7 @@ player_cards: 2 Ks 7s*/
 				const iterator = deckSet.entries();
 				let text = "";
 				for (const entry of iterator) {
-				  text += entry + "  ";
+				  text += entry[0] + "  ";
 				}
                 outputTextArea.value = newlines;
                 handsleftoutput.value = text;
