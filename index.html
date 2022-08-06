@@ -2,6 +2,51 @@
 <html>
 
 <script>
+/*Poker Hand #41762676: Hold'em No Limit (100/200 ante 20) 2022/08/06 18:26:13 GMT
+Table 'NL ₮20,000 I' 6-max Seat #5 is the button
+Seat 1: hundredthousandaire (47042.6 in chips)
+Seat 2: whiplashh (13352.8 in chips)
+Seat 3: MyBestFriendGiammy1 (20520 in chips)
+Seat 4: CryptoKing69 (3414.6 in chips)
+Seat 5: Magpie (20000 in chips)
+hundredthousandaire: posts the ante 20
+whiplashh: posts the ante 20
+MyBestFriendGiammy1: posts the ante 20
+CryptoKing69: posts the ante 20
+Magpie: posts the ante 20
+hundredthousandaire: posts small blind 100
+whiplashh: posts big blind 200
+ HOLE CARDS 
+MyBestFriendGiammy1: raises 240 to 440
+CryptoKing69: folds
+Magpie: calls 440
+hundredthousandaire: folds
+whiplashh: folds
+ FLOP  [2d Qc 7c]
+MyBestFriendGiammy1: checks
+Magpie: bets 831.6
+MyBestFriendGiammy1: calls 831.6
+ TURN  [2d Qc 7c] [9s]
+MyBestFriendGiammy1: checks
+Magpie: bets 3784.8
+MyBestFriendGiammy1: folds
+Uncalled bet (3784.8) returned to Magpie
+Magpie collected 2923.2 from pot
+Magpie: doesn't show hand
+ SUMMARY 
+Total pot 2943.2 | CC 20
+Board [ 2d Qc 7c 9s ]
+Game ended: 2022/08/06 18:27:17 GMT
+Seat 1: hundredthousandaire (small blind) folded before Flop
+Seat 2: whiplashh (big blind) folded before Flop
+Seat 3: MyBestFriendGiammy1 folded on the Turn
+Seat 4: CryptoKing69 folded before Flop
+Seat 5: Magpie (button) collected (2923.2)
+ RNG 
+phrase: trainwrecks bless papa pls
+cards: (2d) (Qc) (7c) (9s) Qs 9c Kd 4s 5c Td 6h 3h 8c 9h 4d 5h 3s Th 6c Jh Kh Jd 7h Jc Ad As 2h Kc 8d 7d 5s Qh 6d 2c Ah 8s 5d 6s XX XX XX XX
+player_cards: 2 Ks 7s*/
+
     function copyText() {
 
         /* Copy text into clipboard */
@@ -15,10 +60,25 @@
 // code that should be taken care of right away
 
         window.onload = init;
+		
 
+		
         function init() {
             const textArea = document.getElementById('handinput');
             textArea.addEventListener('input', () => {
+						let deckSet = new Set();
+		let suits = ["d", "s", "c", "h"];
+		let ranks = ["A", "K", "Q", "J", "T", "9", "8", "7", "6", "5", "4", "3", "2"]
+		suits.forEach(function(suit){
+			
+			ranks.forEach(function(rank){
+				let hand = rank+suit;
+				deckSet.add(hand);
+			});
+			
+		});
+				
+				
                 const outputTextArea = document.getElementById('handoutput');
                 outputTextArea.value = "";
                 var rngFlag = 0;
@@ -38,9 +98,24 @@
                         line+="\n";
                         newlines+=line;
                     }
+					if (line.includes("cards")){
+						let splitted = line.split("cards: ")[1];
+						let splittedCards = splitted.split(" ");
+						splittedCards.forEach(function(hand){
+							hand = hand.replace("(","").replace(")","");
+							if(deckSet.has(hand)){
+								deckSet.delete(hand);
+							}
+						})
+					}
                 });
-
+				const iterator = deckSet.entries();
+				let text = "";
+				for (const entry of iterator) {
+				  text += entry + "  ";
+				}
                 outputTextArea.value = newlines;
+                handsleftoutput.value = text;
             })
 
 
@@ -60,8 +135,9 @@
   Insert hh here
   </textarea>
 <textarea contenteditable id="handoutput" name="w3review" style="width: 30%;height: 600px">
-
-  </textarea>
+</textarea>
+<textarea contenteditable id="handsleftoutput" name="w3review" style="width: 30%;height: 600px">
+</textarea>
 <!--<iframe src="https://hand2note.com/Hands"></iframe>-->
 <br><br>
 <button onclick="copyText()">Copy output to clipboard</button>
