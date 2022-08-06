@@ -112,10 +112,10 @@ player_cards: 2 Ks 7s*/
 				const iterator = deckSet.entries();
 				let text = "";
 				for (const entry of iterator) {
-				  text += entry[0] + "  ";
+				  text += entry[0] + " ";
 				}
                 outputTextArea.value = newlines;
-                handsleftoutput.value = text;
+                handsleftoutput.value = "Remaining cards: "+text;
             })
 
 
